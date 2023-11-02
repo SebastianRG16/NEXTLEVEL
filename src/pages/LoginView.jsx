@@ -1,63 +1,49 @@
+import LogoNextLeve from "../assets/next-level-Logo.png";
+import nextLevel from "../assets/fondoLogin.png";
+import { Outlet } from "react-router-dom";
+
 export function LoginView() {
   return (
     <div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-4 text-white font-sans font-bold bg-black min-h-screen pl-7">
-          <div className="grid grid-rows-6 grid-flow-col min-h-screen items-center justify-items-start">
-            <div className="row-span-4 row-start-2 text-4xl">
-              Sign In
-              <div className="pt-10 pr-20">
-                <label className="text-sm font-sans font-medium">Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Write your username"
-                  className="w-full bg-black py-3 px-12 border hover: border-gray-500 rounded shadow text-base font-sans"
-                />
+      <div className="bg-white">
+        <div className="flex justify-center h-screen">
+          <div
+            className="hidden bg-cover lg:block lg:w-2/3"
+            style={{ backgroundImage: `url(${nextLevel})` }}
+          >
+            <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+              {/* <div>
+                <h2 className="text-2xl font-bold text-white sm:text-3xl">
+                  NEXT LEVEL
+                </h2>
+
+                <p className="max-w-xl mt-3 text-gray-300">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
+                  autem ipsa, nulla laboriosam dolores, repellendus perferendis
+                  libero suscipit nam temporibus molestiae
+                </p>
+              </div> */}
+            </div>
+          </div>
+
+          <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+            <div className="flex-1">
+              <div className="text-center">
+                <p className="flex justify-center mx-auto font-extrabold text-3xl">
+                  NEXT LEVEL
+                </p>
+                <div className="flex justify-center mx-auto mb-0">
+                  <img className="w-auto h-14" src={LogoNextLeve} alt="" />
+                </div>
               </div>
-              <div className="pt-2 pr-20">
-                <label className="text-sm font-sans font-medium">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Write your password"
-                  className=" w-full bg-black py-3 px-12 border hover: border-gray-500 rounded shadow text-base font-sans"
-                />
-                <a
-                  href=""
-                  className="text-sm font-sans font-medium text-gray-600 underline"
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <div className="text-sm font-sans font-medium w-full pr-20 pt-14">
-                <button
-                  type="button"
-                  className="text-center w-full py-4 bg-blue-700 hover:bg-blue-400 rounded-md text-white"
-                >
-                  SIGN IN
-                </button>
+
+              <div className="mt-2">
+                <Outlet />
               </div>
             </div>
-            <a
-              href=""
-              className="text-sm font-sans font-medium text-gray-400 underline"
-            >
-              Don´t have an account? Sign up
-            </a>
           </div>
         </div>
-
-        <div className="banner col-span-8 text-white font-sans font-bold"></div>
       </div>
-
-      {/* <style>
-    .banner {
-        background: url( 'https://s1.1zoom.me/b6058/448/Dogs_Svetlana_Shelemeteva_Hug_Little_girls_568770_1920x1080.jpg' );
-        background-repeat: no-repeat;
-        background-size: cover        
-    }
-</style> */}
     </div>
   );
 }
