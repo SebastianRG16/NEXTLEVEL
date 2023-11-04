@@ -29,7 +29,7 @@ export const RegistrarLogin = () => {
           birthdate: data.fechaNacimiento,
         })
         .then(async () => {
-          navigate("/home");
+          navigate("/");
         }),
       {
         loading: "Verificando...",
@@ -93,7 +93,23 @@ export const RegistrarLogin = () => {
             </span>
           )}
         </div>
-        <div className="mb-1">
+        <div>
+          <label className="text-gray-700 text-sm ">Tipo de usuario</label>
+          <select
+            className="block w-full px-3 py-2 mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+            {...register("user", { required: true })}
+          >
+            <option></option>
+            <option value="STUDENT">Estudiante</option>
+            <option value="TEACHER">Profesor</option>
+          </select>
+          {errors.user && (
+            <span className="flex text-red-600 text-[10px] font-semibold ml-2 sm:text-[12px] md:text-[13px] lg:text-[10px] xl:text-[12px] 2xl:text-[16px]">
+              Este campo es requerido
+            </span>
+          )}
+        </div>
+        {/* <div className="mb-1">
           <label className="block mb-2 text-sm text-gray-600 ">
             Tipo de usuario
           </label>
@@ -110,7 +126,7 @@ export const RegistrarLogin = () => {
               Este campo es requerido
             </span>
           )}
-        </div>
+        </div> */}
         <div className="mb-1">
           <label className="block mb-2 text-sm text-gray-600 ">
             Fecha de nacimiento
@@ -148,16 +164,6 @@ export const RegistrarLogin = () => {
           )}
         </div>
         <div className="mt-1">
-          {/* <div className="flex justify-between mb-2">
-            <label className="text-sm text-gray-600">Contraseña</label>
-          </div>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Digite su contraseña"
-            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-          /> */}
           <button className="mb-2 mt-6 w-full px-4 py-2 tracking-wide text-white transition-all duration-300 transform bg-slate-900 rounded-lg hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:ring  focus:ring-opacity-50 hover:scale-105 hover:shadow-md">
             Registrar
           </button>

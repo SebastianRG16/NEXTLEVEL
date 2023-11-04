@@ -22,9 +22,14 @@ export const IngresarLogin = () => {
       .get(`${URL}${data.username}/${data.password}`)
       .then(async (response) => {
         if (response.status === 200) {
+          console.log(response);
           if (!response.data.msg) {
             toast.success("Bienvenido a Next Level");
-            navigate("home/");
+            if (response.data.type_user === "TEACHER") {
+              navigate("teacher/");
+            } else {
+              navigate("home/");
+            }
           } else {
             toast.error("Credenciales incorrectas");
           }
