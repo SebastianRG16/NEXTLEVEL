@@ -1,8 +1,25 @@
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+const URL = "http://localhost:3000/api/courses/courses";
+
 export const CursosTeacher = () => {
+  const getDatos = async () => {
+    try {
+      const response = await axios.get(URL);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  };
+
+  useEffect(() => {
+    getDatos();
+  }, []);
+
   return (
     <div>
       <section className="bg-white ">
@@ -20,12 +37,12 @@ export const CursosTeacher = () => {
               />
 
               <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <a
-                  href="#"
+                <Link
+                  to="/curso"
                   className="text-xl font-semibold text-gray-800 hover:underline "
                 >
                   How to use sticky note for problem solving
-                </a>
+                </Link>
                 <div className="text-xl flex gap-4 justify-end mr-12">
                   <div className="">
                     <FontAwesomeIcon icon={faThumbsUp} />
@@ -37,111 +54,6 @@ export const CursosTeacher = () => {
                   </div>
                 </div>
                 <span className="text-sm text-gray-500 ">
-                  On: 20 October 2019
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:flex">
-              <img
-                className="object-cover w-full h-56 rounded-lg lg:w-64"
-                src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt=""
-              />
-
-              <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <Link
-                  to="/curso"
-                  className="text-xl font-semibold text-gray-800 hover:underline "
-                >
-                  How to use sticky note for problem solving
-                </Link>
-
-                <span className="text-sm text-gray-500 ">
-                  On: 20 October 2019
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:flex">
-              <img
-                className="object-cover w-full h-56 rounded-lg lg:w-64"
-                src="https://images.unsplash.com/photo-1544654803-b69140b285a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt=""
-              />
-
-              <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <a
-                  href="#"
-                  className="text-xl font-semibold text-gray-800 hover:underline"
-                >
-                  Morning routine to boost your mood
-                </a>
-
-                <span className="text-sm text-gray-500">
-                  On: 25 November 2020
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:flex">
-              <img
-                className="object-cover w-full h-56 rounded-lg lg:w-64"
-                src="https://images.unsplash.com/photo-1530099486328-e021101a494a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1547&q=80"
-                alt=""
-              />
-
-              <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <a
-                  href="#"
-                  className="text-xl font-semibold text-gray-800 hover:underline"
-                >
-                  All the features you want to know
-                </a>
-
-                <span className="text-sm text-gray-500">
-                  On: 30 September 2020
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:flex">
-              <img
-                className="object-cover w-full h-56 rounded-lg lg:w-64"
-                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1484&q=80"
-                alt=""
-              />
-
-              <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <a
-                  href="#"
-                  className="text-xl font-semibold text-gray-800 hover:underline"
-                >
-                  Minimal workspace for your inspirations
-                </a>
-
-                <span className="text-sm text-gray-500">
-                  On: 13 October 2019
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:flex">
-              <img
-                className="object-cover w-full h-56 rounded-lg lg:w-64"
-                src="https://images.unsplash.com/photo-1624996379697-f01d168b1a52?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt=""
-              />
-
-              <div className="flex flex-col justify-between py-6 lg:mx-6">
-                <a
-                  href="#"
-                  className="text-xl font-semibold text-gray-800 hover:underline"
-                >
-                  What do you want to know about Blockchane
-                </a>
-
-                <span className="text-sm text-gray-500">
                   On: 20 October 2019
                 </span>
               </div>

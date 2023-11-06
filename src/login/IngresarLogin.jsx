@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
-const URL = "https://next-level-b.fly.dev/api/user/login/";
+const URL = "http://localhost:3000/api/user/login/";
 
 export const IngresarLogin = () => {
   const navigate = useNavigate();
@@ -24,6 +24,8 @@ export const IngresarLogin = () => {
         if (response.status === 200) {
           console.log(response);
           if (!response.data.msg) {
+            console.log(response.data._id);
+            localStorage.setItem("user", response.data._id);
             toast.success("Bienvenido a Next Level");
             if (response.data.type_user === "TEACHER") {
               navigate("teacher/");

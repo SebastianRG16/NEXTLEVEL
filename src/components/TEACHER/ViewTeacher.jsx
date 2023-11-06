@@ -1,14 +1,16 @@
-// import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
+const URL = "http://localhost:3000/api/courses/subir-curso";
 
 export const ViewTeacher = () => {
   const [videoFileName, setVideoFileName] = useState("");
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-//   const [totalPuntaje, setTotalPuntaje] = useState(0);
+  //   const [totalPuntaje, setTotalPuntaje] = useState(0);
 
   const {
     register,
@@ -71,12 +73,58 @@ export const ViewTeacher = () => {
     }
 
     if (videoFileName !== "" && valid === true) {
+      console.log(typeof preguntas);
+
+      // const preguntasData = JSON.stringify(preguntas);
+
+      const formData = new FormData();
+      formData.append("title", data.name);
+      formData.append("description", data.description);
+      formData.append("teacher_id", "6546ce94ef39fdcc7e5dff4c");
+      // // formData.append("miniature_url", data.name);
+      formData.append("video", video);
+      preguntas.forEach((item, index) => {
+        formData.append(`asks[${index}][pregunta]`, item.pregunta);
+        item.respuestas.forEach((respuesta, respuestaIndex) => {
+          formData.append(
+            `asks[${index}][respuestas][${respuestaIndex}][name]`,
+            respuesta.name
+          );
+          formData.append(
+            `asks[${index}][respuestas][${respuestaIndex}][puntaje]`,
+            respuesta.puntaje.toString()
+          );
+        });
+      });
+      // formData.append("asks",);
+
+      console.log(formData);
+
       const puntajeTotal = calcularPuntajeTotal();
       console.log(puntajeTotal);
       console.log(video);
       console.log(data);
       console.log(preguntas);
+
       setIsLoading(!isLoading);
+      await toast.promise(
+        axios
+
+          .post(URL, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then(async () => {
+            // Navigate("/");
+            toast.success("curso creado correctamente");
+          }),
+        {
+          loading: "Verificando...",
+          success: <b>Curso agreagdo con exito!</b>,
+          error: <b>Error creando curso</b>,
+        }
+      );
       setIsLoading(!isLoading);
     }
   });
