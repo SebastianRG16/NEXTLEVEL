@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../assets/next-level-Logo.png";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
@@ -8,8 +8,36 @@ import {
   faList,
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+
+const URL = "http://localhost:3000/api/user/user/";
 
 export function ViewCursos() {
+  const [data, setData] = useState(null);
+
+  const location = useLocation();
+  const direccion = location.pathname;
+
+  const getDatos = async () => {
+    const miDato = localStorage.getItem("user");
+    // console.log(miDato);
+    try {
+      const response = await axios.get(URL + miDato);
+      if (response.data.msg) {
+        // console.log("hola");
+      } else {
+        setData(response.data);
+      }
+      // console.log(response.data);
+    } catch (error) {
+      // console.error("Error al obtener datos:", error);
+    }
+  };
+
+  useEffect(() => {
+    getDatos();
+  }, []);
+
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
@@ -67,24 +95,28 @@ export function ViewCursos() {
               src={Logo}
               alt="avatar"
             />
-            <h4 className="mx-2 mt-2 font-medium text-gray-800 ">Sebastian</h4>
+            <h4 className="mx-2 mt-2 font-medium text-gray-800 ">{data && data.name} {data && data.last_name}</h4>
             <p className="mx-2 mt-1 text-sm font-medium text-gray-600">
-              sebastian@gmail.com
+            {data && data.email}
             </p>
           </div>
 
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
               <Link
-                className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
-                to="/teacher"
+                className={`flex items-center px-4 py-2 transition-colors duration-300 transform text-gray-700 ${
+                  direccion === "/teacher/" ? "bg-gray-100" : ""
+                } hover:bg-gray-100 rounded-lg`}
+                to="/teacher/"
               >
                 <FontAwesomeIcon icon={faList} />
                 <span className="mx-4 font-medium">Mis cursos</span>
               </Link>
 
               <Link
-                className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lghover:bg-gray-100 hover:text-gray-700"
+                className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg ${
+                  direccion === "/teacher/create" ? "bg-gray-100" : ""
+                } hover:bg-gray-100 hover:text-gray-700`}
                 to="/teacher/create"
               >
                 <FontAwesomeIcon icon={faSquarePlus} />
@@ -92,7 +124,9 @@ export function ViewCursos() {
                 <span className="mx-4 font-medium">Crear curso</span>
               </Link>
               <Link
-                className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lghover:bg-gray-100 hover:text-gray-700"
+                className={`flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg ${
+                  direccion === "/teacher/progress" ? "bg-gray-100" : ""
+                } hover:bg-gray-100 hover:text-gray-700`}
                 to="/teacher/progress"
               >
                 <FontAwesomeIcon icon={faBarsProgress} />
@@ -102,7 +136,7 @@ export function ViewCursos() {
                 </span>
               </Link>
               <Link
-                className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lghover:bg-gray-100 hover:text-gray-700"
+                className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
                 to="/"
               >
                 <FontAwesomeIcon icon={faArrowLeft} />

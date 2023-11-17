@@ -7,9 +7,12 @@ const URL = "http://localhost:3000/api/courses/subir-curso";
 
 export const ViewTeacher = () => {
   const [videoFileName, setVideoFileName] = useState("");
+  const [ImageFileName, setImageFileName] = useState("");
   const [video, setVideo] = useState(null);
+  const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmittedImage, setFormSubmittedImage] = useState(false);
   //   const [totalPuntaje, setTotalPuntaje] = useState(0);
 
   const {
@@ -74,15 +77,17 @@ export const ViewTeacher = () => {
 
     if (videoFileName !== "" && valid === true) {
       console.log(typeof preguntas);
-
+      const puntajeTotal = calcularPuntajeTotal();
       // const preguntasData = JSON.stringify(preguntas);
+      const miDato = localStorage.getItem("user");
 
       const formData = new FormData();
       formData.append("title", data.name);
       formData.append("description", data.description);
-      formData.append("teacher_id", "6546ce94ef39fdcc7e5dff4c");
+      formData.append("teacher_id", miDato);
       // // formData.append("miniature_url", data.name);
       formData.append("video", video);
+      formData.append("max_points", puntajeTotal);
       preguntas.forEach((item, index) => {
         formData.append(`asks[${index}][pregunta]`, item.pregunta);
         item.respuestas.forEach((respuesta, respuestaIndex) => {
@@ -100,7 +105,6 @@ export const ViewTeacher = () => {
 
       console.log(formData);
 
-      const puntajeTotal = calcularPuntajeTotal();
       console.log(puntajeTotal);
       console.log(video);
       console.log(data);
@@ -117,11 +121,11 @@ export const ViewTeacher = () => {
           })
           .then(async () => {
             // Navigate("/");
-            toast.success("curso creado correctamente");
+            // toast.success("curso creado correctamente");
           }),
         {
           loading: "Verificando...",
-          success: <b>Curso agreagdo con exito!</b>,
+          success: <b>Curso agregado con exito!</b>,
           error: <b>Error creando curso</b>,
         }
       );
@@ -129,6 +133,7 @@ export const ViewTeacher = () => {
     }
   });
 
+  // esto es para el video
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     setVideoFileName(file.name);
@@ -143,6 +148,24 @@ export const ViewTeacher = () => {
   };
 
   const preventDefault = (event) => {
+    event.preventDefault();
+  };
+
+  // esto es para la miniatura
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImageFileName(file.name);
+    setImage(file);
+  };
+
+  const handleImage = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setImageFileName(file.name);
+    setImage(file);
+  };
+
+  const preventImage = (event) => {
     event.preventDefault();
   };
 
@@ -228,6 +251,42 @@ export const ViewTeacher = () => {
                 ) : (
                   <span></span>
                 )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Miniatura
+                </label>
+                <div
+                  className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+                  onDrop={handleImage}
+                  onDragOver={preventImage}
+                >
+                  <div className="space-y-1 text-center">
+                    <svg
+                      className="mx-auto h-12 w-12 text-gray-700"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
+                    >
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
+                    </svg>
+                    <div className="flex text-sm text-gray-600">
+                      <label className="relative cursor-pointer bg-gray-300 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                        <span className="">Cargue una imagen</span>
+                        <input
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleImageUpload}
+                        />
+                      </label>
+                      <p className="pl-1 text-gray-700">o arrastre y suelte</p>
+                    </div>
+                    <p className="text-xs text-gray-700">{ImageFileName}</p>
+                  </div>
+                </div>
               </div>
             </div>
             <div>
